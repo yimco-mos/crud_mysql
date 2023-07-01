@@ -1,9 +1,9 @@
 import express from "express";
 
-const router = express.Router();
+export const RouterBooks = express.Router();
 
 // Ruta GET para obtener todos los libros
-router.get("/", (req, res) => {
+RouterBooks.get("/save_books", (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 });
 
 // Ruta POST para agregar un nuevo libro
-router.post('/', (req, res) => {
+RouterBooks.post('/add_book', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 });
 
 
-router.delete('/:id', (req, res) => {
+RouterBooks.delete('/books/:id', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
@@ -42,7 +42,7 @@ router.delete('/:id', (req, res) => {
 });
 
 
-router.put('/:id', (req, res) => {
+RouterBooks.put('/books/:id', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
@@ -55,5 +55,3 @@ router.put('/:id', (req, res) => {
 });
 
 
-
-export default router;

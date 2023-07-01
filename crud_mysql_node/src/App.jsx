@@ -1,88 +1,123 @@
-import { Login } from "./assets/login";
-import { useState } from "react";
+import { Routes, Route, Form, } from "react-router-dom";
+//componentes de reenderiado
+import {ControlerUsers } from './assets/publics/ControlerUsers'
+import {ControlerProducts} from './assets/publics/ControlerProducts';
+import { FormValidate } from "./assets/publics/FormValidate";
+import { FormNewUser } from "./assets/componentsadmin/FormNewUser";
+import {FormEditUser } from "./assets/componentsadmin/FormEditUser";
 import "./App.css";
-function App() {
-  const [checkedView, setCheckedView] = useState(false);
-  const [colorCheked, setColorChecked] = useState(false);
-  const [userValidate, setUserValidate] = useState([]);
-  const [user, setUser] = useState({
-    name: "",
-    password: "",
-  });
 
-  const handleCheckedView = () => {
-    setCheckedView(!checkedView);
-    setColorChecked(!colorCheked);
-  };
-  const handleChange = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmmit = (e) => {
-    e.preventDefault();
-    setUserValidate([...userValidate, user]);
-    console.log(userValidate);
-  };
-
+export const App = () => {
   return (
     <>
-      <div className="p-5">
-        <form>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              value={user.name}
-              onChange={handleChange}
-              name="name"
-              aria-describedby="emailHelpId"
-              placeholder="abc@mail.com"
-            />
-            <small id="emailHelpId" className="form-text text-muted">
-              Help text
-            </small>
-          </div>
-
-          <div className="mb-3 ">
-            <label className="form-label">passwoord</label>
-            <div className="checkView d-flex ">
-              <input
-                type={checkedView ? "text" : "password"}
-                className="md-3 form-control"
-                name="password"
-                onChange={handleChange}
-                value={user.password}
-                aria-describedby="emailHelpId"
-                placeholder="abc@mail.com"
-              />
-              <div
-                style={{
-                  background: colorCheked && "#fb0a0ab9",
-
-                  border: colorCheked
-                    ? "1px solid #000"
-                    : "1px solid #fb0a0ab9",
-                }}
-                className="circleCheck"
-                onClick={handleCheckedView}
-              ></div>
-            </div>
-            <small id="emailHelpId" className="form-text text-muted">
-              Help text
-            </small>
-          </div>
-
-          <button className="btn btn-success" onClick={handleSubmmit}>
-            Entrar{" "}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+          <a className="navbar-brand " href="/">
+            AddminManager
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
           </button>
-        </form>
-      </div>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  opciones Admin
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/admin/controler_Products"
+                    >
+                      controlador productos
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/admin/controler_users">
+                      controlador usuarios
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      configuración admin
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">
+                  Products
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link active" href="/home">
+                  user
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a className="nav-link active" href="/create_user_admin" aria-disabled="true">
+                  create Admin
+                </a>
+              </li>
+            </ul>
+            <form className="d-flex">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button className="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/" element={<FormValidate />} />
+        <Route path="/admin/controler_users" element={<ControlerUsers />} />
+        <Route
+          path="/admin/controler_Products"
+          element={<ControlerProducts />}
+        />
+        
+        <Route
+          path="/admin/controler_users/new_user"
+          element={<FormNewUser />}
+        />
+        
+        <Route
+          path="/create_user_admin"
+          element={<FormNewUser />}
+        />
+       
+       <Route
+          path="/admin/controler_users/edit_user/:name"
+          element={<FormEditUser />}
+        />
+        <Route path="/login" element={<FormValidate />} />
+      </Routes>
     </>
   );
-}
-
-export default App;
+};
